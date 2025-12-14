@@ -134,3 +134,4 @@ wrangler pages deploy out --project-name=class1
    - 确认所有静态资源路径正确
    - 检查 `out/` 目录是否包含所有文件
 
+

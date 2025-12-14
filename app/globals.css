@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* KaTeX 样式 */
+@import 'katex/dist/katex.min.css';
+
+/* Highlight.js 样式 */
+@import 'highlight.js/styles/github-dark.css';
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

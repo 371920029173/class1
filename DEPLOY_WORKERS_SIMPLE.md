@@ -51,3 +51,4 @@ https://history-api.xxxxx.workers.dev
 - 变量名称：`NEXT_PUBLIC_API_URL`
 - Variable value：你刚才获得的 Workers URL
 
+
