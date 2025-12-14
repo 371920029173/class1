@@ -244,7 +244,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredHistories.map((item, index) => {
               const itemCategories = item.category ? item.category.split(',').map(c => c.trim()) : [];
-              const isVisible = visibleItems.has(item.id);
+              const isVisible = item.id ? visibleItems.has(item.id) : false;
+              if (!item.id) return null;
               return (
                 <Link
                   key={item.id}
