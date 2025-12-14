@@ -197,13 +197,13 @@ function PostContent() {
           </header>
 
           {item.description && (
-            <div className="mb-6 text-slate-700">
+            <div className="mb-6 text-black">
               <p className="text-lg">{item.description}</p>
             </div>
           )}
 
           {item.content && (
-            <div className="mb-6 prose max-w-none">
+            <div className="mb-6 prose max-w-none prose-slate prose-headings:text-black prose-p:text-black prose-li:text-black prose-strong:text-black">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex, rehypeRaw, rehypeHighlight]}

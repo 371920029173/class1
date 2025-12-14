@@ -188,7 +188,7 @@ body {
 
 /* Markdown 样式 */
 .prose {
-  @apply text-slate-700 dark:text-slate-300;
+  @apply text-black;
 }
 
 .prose h1,
@@ -197,7 +197,7 @@ body {
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply font-bold text-slate-900 dark:text-white mt-6 mb-4;
+  @apply font-bold text-black mt-6 mb-4;
 }
 
 .prose h1 {
