@@ -49,6 +49,11 @@ export default {
     }
 
     try {
+      // 批量获取（分页）- 必须在 /api/history/ 之前检查
+      if (path === '/api/history/batch' && request.method === 'GET') {
+        return handleBatch(request, env, corsHeaders);
+      }
+
       // 获取所有历史记录
       if (path === '/api/history' && request.method === 'GET') {
         return handleGetAll(env, corsHeaders);
@@ -75,11 +80,6 @@ export default {
       if (path.startsWith('/api/history/') && request.method === 'DELETE') {
         const id = path.split('/').pop();
         return handleDelete(request, env, id!, corsHeaders);
-      }
-
-      // 批量获取（分页）
-      if (path === '/api/history/batch' && request.method === 'GET') {
-        return handleBatch(request, env, corsHeaders);
       }
 
       // 文件上传
