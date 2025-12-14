@@ -162,7 +162,7 @@ function PostContent() {
           返回
         </Link>
 
-        <article className="bg-white rounded-lg shadow-lg p-8">
+        <article className="bg-slate-50 rounded-lg shadow-lg p-8 border border-slate-200">
           <header className="mb-6">
             <h1 className="text-3xl font-bold text-slate-900 mb-4">
               {item.title}
