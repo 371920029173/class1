@@ -1,4 +1,3 @@
-import { params } from 'next/navigation';
 import PostClient from './PostClient';
 
 // 静态导出需要 generateStaticParams
