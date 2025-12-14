@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { apiClient, HistoryItem } from '@/lib/api-client';
 import { ArrowLeft, Download, Trash2 } from 'lucide-react';
 import Link from 'next/link';
@@ -14,18 +14,18 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 
-interface PostClientProps {
-  id: string;
-}
-
-export default function PostClient({ id }: PostClientProps) {
+function PostContent() {
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const id = searchParams.get('id');
   const [item, setItem] = useState<HistoryItem | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
       loadPost(id);
+    } else {
+      setLoading(false);
     }
   }, [id]);
 
@@ -53,10 +53,34 @@ export default function PostClient({ id }: PostClientProps) {
     }
   };
 
+  if (!id) {
+    return (
+      <div className="min-h-screen bg-white relative flex items-center justify-center">
+        <div 
+          className="absolute top-0 left-0 w-full h-[450px] z-0"
+          style={{
+            backgroundImage: `url('/bg-image.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',
+            filter: 'saturate(1)',
+          }}
+        />
+        <div className="text-center relative z-10">
+          <p className="text-slate-600 text-lg">缺少参数</p>
+          <Link href="/" className="mt-4 inline-block text-purple-600 hover:text-purple-700">
+            返回首页
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white relative flex items-center justify-center">
-        {/* 背景图片 - 从上到下渐变 */}
         <div 
           className="absolute top-0 left-0 w-full h-[450px] z-0"
           style={{
@@ -80,7 +104,6 @@ export default function PostClient({ id }: PostClientProps) {
   if (!item) {
     return (
       <div className="min-h-screen bg-white relative flex items-center justify-center">
-        {/* 背景图片 - 从上到下渐变 */}
         <div 
           className="absolute top-0 left-0 w-full h-[450px] z-0"
           style={{
@@ -105,7 +128,6 @@ export default function PostClient({ id }: PostClientProps) {
 
   return (
     <div className="min-h-screen bg-white relative py-8">
-      {/* 背景图片 - 从上到下渐变 */}
       <div 
         className="absolute top-0 left-0 w-full h-[450px] z-0"
         style={{
@@ -209,7 +231,6 @@ export default function PostClient({ id }: PostClientProps) {
             </div>
           )}
 
-          {/* 文件展示 */}
           {item.files && item.files.length > 0 && (
             <div className="mb-6 space-y-4">
               {item.files.map((file, index) => (
@@ -254,7 +275,6 @@ export default function PostClient({ id }: PostClientProps) {
             </div>
           )}
 
-          {/* 下载链接 */}
           {item.downloadFile && (
             <div className="mt-8 pt-6 border-t border-slate-200">
               <a
@@ -268,7 +288,6 @@ export default function PostClient({ id }: PostClientProps) {
             </div>
           )}
 
-          {/* 删除按钮 */}
           <div className="mt-6 pt-6 border-t border-slate-200">
             <button
               onClick={handleDelete}
@@ -281,6 +300,33 @@ export default function PostClient({ id }: PostClientProps) {
         </article>
       </div>
     </div>
+  );
+}
+
+export default function PostPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white relative flex items-center justify-center">
+        <div 
+          className="absolute top-0 left-0 w-full h-[450px] z-0"
+          style={{
+            backgroundImage: `url('/bg-image.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%)',
+            filter: 'saturate(1)',
+          }}
+        />
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          <p className="mt-4 text-slate-600">加载中...</p>
+        </div>
+      </div>
+    }>
+      <PostContent />
+    </Suspense>
   );
 }
 

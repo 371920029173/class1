@@ -249,7 +249,7 @@ export default function Home() {
               return (
                 <Link
                   key={item.id}
-                  href={`/post/${item.id}`}
+                  href={`/post?id=${item.id}`}
                   className={`card-hover bg-white rounded-lg shadow-md p-6 block ${
                     isVisible ? 'animate-fade-in opacity-100' : 'opacity-0'
                   }`}
