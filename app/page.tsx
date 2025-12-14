@@ -55,7 +55,10 @@ export default function Home() {
         let index = 0;
         const showNext = () => {
           if (index < items.length) {
-            setVisibleItems(prev => new Set([...prev, items[index].id]));
+            const item = items[index];
+            if (item.id) {
+              setVisibleItems(prev => new Set([...prev, item.id!]));
+            }
             index++;
             if (index < items.length) {
               requestAnimationFrame(() => {
