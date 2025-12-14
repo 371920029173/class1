@@ -18,10 +18,12 @@ export default function Home() {
 
   useEffect(() => {
     loadHistories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     loadHistories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, selectedCategories]);
 
   const loadHistories = async () => {
@@ -283,7 +285,7 @@ export default function Home() {
         {/* 底部说明 */}
         <footer className="mt-12 pt-8 border-t border-slate-200">
           <p className="text-xs text-slate-500 text-center">
-            tips: 若有疑问或建议可前往社区论坛讨论或直接向社区管理员"371920029173"私信
+            tips: 若有疑问或建议可前往社区论坛讨论或直接向社区管理员&quot;371920029173&quot;私信
           </p>
         </footer>
       </div>

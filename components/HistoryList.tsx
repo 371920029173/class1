@@ -31,7 +31,7 @@ export default function HistoryList({ histories, onDelete, onUpdate }: HistoryLi
     return (
       <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-12 text-center">
         <p className="text-slate-500 dark:text-slate-400 text-lg">
-          还没有历史记录，点击"添加记录"开始吧！
+          还没有历史记录，点击&quot;添加记录&quot;开始吧！
         </p>
       </div>
     );
