@@ -14,6 +14,15 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import rehypeHighlight from 'rehype-highlight';
 
+// 静态导出需要 generateStaticParams，但我们的内容是动态的
+// 返回空数组，允许动态参数
+export async function generateStaticParams() {
+  return [];
+}
+
+// 允许动态参数（在静态导出模式下）
+export const dynamicParams = true;
+
 export default function PostPage() {
   const params = useParams();
   const router = useRouter();
