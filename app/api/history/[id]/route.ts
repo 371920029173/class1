@@ -22,7 +22,14 @@ async function proxyRequest(request: Request, id: string): Promise<Response> {
   };
 
   if (request.method !== 'GET' && request.method !== 'HEAD') {
-    init.body = await request.text();
+    // 对于 JSON 请求，读取为文本
+    const contentType = request.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      init.body = await request.text();
+    } else {
+      // 对于 FormData 等，直接传递
+      init.body = request.body;
+    }
   }
 
   try {
