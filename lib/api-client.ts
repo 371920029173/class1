@@ -1,7 +1,8 @@
-// API 客户端 - 与 Cloudflare Workers 通信
+// API 客户端 - 通过 Pages Functions 反向代理访问 Workers API
+// 使用相对路径，所有请求都走同一个域名，避免被拦截
 
-// API 基础URL - 如果未设置，使用本地开发服务器或提示错误
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? '' : 'https://your-worker.your-subdomain.workers.dev');
+// API 基础URL - 使用相对路径，通过 Pages Functions 代理
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 // 硬编码密钥
 const UPLOAD_KEY = 'ssfz2027n15662768895';
@@ -85,10 +86,6 @@ class ApiClient {
 
   // 创建记录（使用硬编码密钥）
   async create(item: Omit<HistoryItem, 'id' | 'created_at' | 'updated_at'>): Promise<HistoryItem> {
-    if (!API_BASE_URL || API_BASE_URL.includes('your-worker')) {
-      throw new Error('API 服务器未配置。请在环境变量中设置 NEXT_PUBLIC_API_URL，或部署 Cloudflare Workers。');
-    }
-    
     try {
       const response = await fetch(`${API_BASE_URL}/api/history`, {
         method: 'POST',

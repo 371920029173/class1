@@ -15,6 +15,7 @@ export default function Home() {
   const [categorySearch, setCategorySearch] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [allCategories, setAllCategories] = useState<string[]>([]);
+  const [networkMessage, setNetworkMessage] = useState<string | null>(null);
 
   useEffect(() => {
     loadHistories();
@@ -29,6 +30,7 @@ export default function Home() {
   const loadHistories = async () => {
     try {
       setLoading(true);
+      setNetworkMessage(null);
       setVisibleItems(new Set()); // 重置可见项
       const response = await apiClient.getBatch({
         search: searchQuery || undefined,
@@ -72,6 +74,8 @@ export default function Home() {
     } catch (error) {
       console.error('加载历史记录失败:', error);
       setHistories([]);
+      setAllCategories([]);
+      setNetworkMessage('当前网络无法连接到服务器，请检查网络（或更换网络/稍后重试）。');
     } finally {
       setLoading(false);
     }
@@ -129,6 +133,11 @@ export default function Home() {
       <div className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
         {/* 头部 */}
         <header className="mb-8">
+          {networkMessage && (
+            <div className="mb-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800 shadow-sm">
+              <p>{networkMessage}</p>
+            </div>
+          )}
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-4xl font-bold text-slate-900 mb-2">
