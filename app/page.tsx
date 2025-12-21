@@ -142,9 +142,6 @@ export default function Home() {
               <h1 className="text-4xl font-bold text-slate-900 mb-2">
                 一班史记
               </h1>
-              <p className="text-slate-600">
-                历史记录管理系统
-              </p>
             </div>
             <Link
               href="/upload"
