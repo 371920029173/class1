@@ -1,9 +1,6 @@
-// Pages Functions - 批量获取历史记录
+// Cloudflare Pages Functions - 批量获取历史记录
 
 const WORKER_URL = 'https://history-api-production.40761154.workers.dev';
-
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 async function proxyRequest(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -41,7 +38,7 @@ async function proxyRequest(request: Request): Promise<Response> {
   }
 }
 
-export async function GET(request: Request) {
-  return proxyRequest(request);
+export async function onRequestGet(context: { request: Request }) {
+  return proxyRequest(context.request);
 }
 

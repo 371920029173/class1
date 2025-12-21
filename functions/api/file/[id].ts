@@ -1,9 +1,6 @@
-// Pages Functions - 文件获取
+// Cloudflare Pages Functions - 文件获取
 
 const WORKER_URL = 'https://history-api-production.40761154.workers.dev';
-
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 async function proxyRequest(request: Request, id: string): Promise<Response> {
   const url = new URL(request.url);
@@ -41,7 +38,7 @@ async function proxyRequest(request: Request, id: string): Promise<Response> {
   }
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  return proxyRequest(request, params.id);
+export async function onRequestGet(context: { request: Request; params: { id: string } }) {
+  return proxyRequest(context.request, context.params.id);
 }
 

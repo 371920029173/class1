@@ -1,9 +1,6 @@
-// Pages Functions - 文件上传
+// Cloudflare Pages Functions - 文件上传
 
 const WORKER_URL = 'https://history-api-production.40761154.workers.dev';
-
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 async function proxyRequest(request: Request): Promise<Response> {
   const workerUrl = `${WORKER_URL}/api/upload`;
@@ -42,7 +39,7 @@ async function proxyRequest(request: Request): Promise<Response> {
   }
 }
 
-export async function POST(request: Request) {
-  return proxyRequest(request);
+export async function onRequestPost(context: { request: Request }) {
+  return proxyRequest(context.request);
 }
 

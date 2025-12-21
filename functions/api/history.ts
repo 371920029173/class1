@@ -1,11 +1,7 @@
-// Pages Functions - 作为反向代理转发到 Workers API
+// Cloudflare Pages Functions - 作为反向代理转发到 Workers API
 // 这样前端和 API 都在同一个域名下，避免被拦截
 
 const WORKER_URL = 'https://history-api-production.40761154.workers.dev';
-
-// 使用 Edge Runtime（Cloudflare Pages Functions 要求）
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 async function proxyRequest(request: Request, path: string): Promise<Response> {
   const url = new URL(request.url);
@@ -60,11 +56,11 @@ async function proxyRequest(request: Request, path: string): Promise<Response> {
   }
 }
 
-export async function GET(request: Request) {
-  return proxyRequest(request, '/api/history');
+export async function onRequestGet(context: { request: Request }) {
+  return proxyRequest(context.request, '/api/history');
 }
 
-export async function POST(request: Request) {
-  return proxyRequest(request, '/api/history');
+export async function onRequestPost(context: { request: Request }) {
+  return proxyRequest(context.request, '/api/history');
 }
 

@@ -1,9 +1,6 @@
-// Pages Functions - 单条记录操作
+// Cloudflare Pages Functions - 单条记录操作
 
 const WORKER_URL = 'https://history-api-production.40761154.workers.dev';
-
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 async function proxyRequest(request: Request, id: string): Promise<Response> {
   const url = new URL(request.url);
@@ -54,15 +51,15 @@ async function proxyRequest(request: Request, id: string): Promise<Response> {
   }
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  return proxyRequest(request, params.id);
+export async function onRequestGet(context: { request: Request; params: { id: string } }) {
+  return proxyRequest(context.request, context.params.id);
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  return proxyRequest(request, params.id);
+export async function onRequestPut(context: { request: Request; params: { id: string } }) {
+  return proxyRequest(context.request, context.params.id);
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  return proxyRequest(request, params.id);
+export async function onRequestDelete(context: { request: Request; params: { id: string } }) {
+  return proxyRequest(context.request, context.params.id);
 }
 
