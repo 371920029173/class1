@@ -321,7 +321,7 @@ function PostContent() {
                       type={showDeleteKey ? 'text' : 'password'}
                       value={deleteKey}
                       onChange={(e) => setDeleteKey(e.target.value)}
-                      className="input-focus w-full px-4 py-2 pr-12 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-400 focus:border-transparent"
+                      className="input-focus w-full px-4 py-2 pr-12 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-400 focus:border-transparent text-slate-900"
                       placeholder="输入删除密钥..."
                       autoFocus
                     />

@@ -52,7 +52,7 @@ export default function Home() {
       });
       setAllCategories(Array.from(cats).sort());
 
-      // 渐进式显示卡片 - 使用 requestAnimationFrame 优化性能
+      // 渐进式显示卡片 - 每个卡片延迟显示
       if (items.length > 0) {
         let index = 0;
         const showNext = () => {
@@ -63,12 +63,11 @@ export default function Home() {
             }
             index++;
             if (index < items.length) {
-              requestAnimationFrame(() => {
-                setTimeout(showNext, 30); // 每个卡片延迟30ms显示
-              });
+              setTimeout(showNext, 50); // 每个卡片延迟50ms显示
             }
           }
         };
+        // 立即显示第一个
         showNext();
       }
     } catch (error) {
