@@ -2,6 +2,13 @@
 
 const WORKER_URL = 'https://history-api-production.40761154.workers.dev';
 
+// CORS 头
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, X-Upload-Key, X-Delete-Key',
+};
+
 async function proxyRequest(request: Request, id: string): Promise<Response> {
   const url = new URL(request.url);
   const workerUrl = `${WORKER_URL}/api/history/${id}${url.search}`;
@@ -33,6 +40,9 @@ async function proxyRequest(request: Request, id: string): Promise<Response> {
     const response = await fetch(workerUrl, init);
     
     const responseHeaders = new Headers(response.headers);
+    Object.entries(corsHeaders).forEach(([key, value]) => {
+      responseHeaders.set(key, value);
+    });
     
     return new Response(response.body, {
       status: response.status,
@@ -45,10 +55,20 @@ async function proxyRequest(request: Request, id: string): Promise<Response> {
       JSON.stringify({ error: 'Failed to connect to API server', message: String(error) }),
       { 
         status: 502,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+          'Content-Type': 'application/json',
+          ...corsHeaders,
+        }
       }
     );
   }
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
 }
 
 export async function onRequestGet(context: { request: Request; params: { id: string } }) {
